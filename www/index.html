@@ -45,7 +45,7 @@
      }
 
      function openInAppBrowser(url){
-       var iab = window.open(url, "_blank", "location=no,toolbar=no,hidden=yes");
+       var iab = window.open(url, "_blank", "location=no,toolbar=no,hidden=yes,transitionstyle=crossdissolve");
 
        iab.addEventListener('loadstop', function(){
          iab.show();
