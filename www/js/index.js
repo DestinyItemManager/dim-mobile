@@ -36,7 +36,7 @@ var app = {
     }
     */
 
-    var browser = cordova.InAppBrowser.open('https://app.destinyitemmanager.com','_system','location=no,zoom=no,hidden=yes,toolbar=no');
+    var browser = cordova.InAppBrowser.open('https://app.destinyitemmanager.com?utm_source=mobile-app','_self','location=no,zoom=no,hidden=yes,toolbar=no');
 
     browser.show();
 
