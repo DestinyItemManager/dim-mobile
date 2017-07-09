@@ -1,49 +1,94 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+  <head>
+    <title>Cordova Web App Loader</title>
+
+    <!-- This is a basic cordova template to load a mobile optimized website and package as hybrid app for distribution through App Stores. -->
+
+    <!-- This type of app is recommended for websites built with an app like look-and-feel, responsive, single-page-app with no external website links or redirection -->
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="cordova.js"></script>
+    <script>
+     function onDeviceReady(){
+       checkConnection();
+       navigator.splashscreen.hide();
+     }
+     document.addEventListener("deviceready", onDeviceReady, false);
+
+     function checkConnection(){
+       if(navigator.network.connection.type == Connection.NONE){
+         document.getElementById("noconn").style.display = "block";
+         document.getElementById("loading").style.display = "none";
+       } else {
+         // change this URL to your web app URL
+         // make sure the web app is developed with all navigation and does not jump to external websites
+
+         //*********************************//
+
+         var url = "https://app.destinyitemmanager.com";
+
+         //*********************************//
+
+         openInAppBrowser(url);
+       }
+     }
+
+     function retryConnection(){
+       document.getElementById("noconn").style.display = "none";
+       document.getElementById("loading").style.display = "block";
+       // adding delay for UX
+       setTimeout(function(){
+         checkConnection();
+       }, 500);
+     }
+
+     function openInAppBrowser(url){
+       var iab = window.open(url, "_blank", "location=no,toolbar=no,hidden=yes");
+
+       iab.addEventListener('loadstop', function(){
+         iab.show();
+       });
+
+       iab.addEventListener('loadstart', function(obj){
+         if(navigator.network.connection.type == Connection.NONE){
+           navigator.notification.alert("Internet connection was not detected, check your connection and retry", null, "No Internet");
+         }
+       });
+
+       iab.addEventListener('loaderror', function(){
+         document.getElementById("noconn").style.display = "block";
+         document.getElementById("loading").style.display = "none";
+       });
+     }
+    </script>
+    <style>
+     body {text-align: center;font-family: Arial;background-color: #eee}
+     #noconn {display:none}
+     .button {display:inline;padding:20px;border:1px solid #777;background-color: #ddd; border-radius: 5px}
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <br>
+      <br>
+      <br>
+
+      <!-- Add your app logo or text -->
+
+      <h1>App Logo</h1>
+      <p>Some branding info</p>
+
+      <!-- ------------------------- -->
+
+      <br>
+      <p id="loading">Loading...</p>
+      <div id="noconn">
+        <p>No Internet Connection</p>
+        <br>
+        <p><div class="button" onclick="retryConnection()">Retry</div></p>
+      </div>
+    </div>
+  </body>
 </html>

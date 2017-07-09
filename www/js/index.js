@@ -17,30 +17,44 @@
  * under the License.
  */
 var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+  // Application Constructor
+  initialize: function() {
+    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+  },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+  // deviceready Event Handler
+  //
+  // Bind any cordova events here. Common events are:
+  // 'pause', 'resume', etc.
+  onDeviceReady: function() {
+    this.receivedEvent('deviceready');
+    /*
+    if (navigator.connection.type == Connection.NONE) {
+      navigator.notification.alert('An internet connection is required to continue');
+    } else {
+      window.location="https://app.destinyitemmanager.com/index.html?utm_source=mobile-app";
     }
+    */
+
+    var browser = cordova.InAppBrowser.open('https://app.destinyitemmanager.com','_system','location=no,zoom=no,hidden=yes,toolbar=no');
+
+    browser.show();
+
+  },
+
+  // Update DOM on a Received Event
+  receivedEvent: function(id) {
+    /*
+    var parentElement = document.getElementById(id);
+    var listeningElement = parentElement.querySelector('.listening');
+    var receivedElement = parentElement.querySelector('.received');
+
+    listeningElement.setAttribute('style', 'display:none;');
+    receivedElement.setAttribute('style', 'display:block;');
+
+    console.log('Received Event: ' + id);
+    */
+  }
 };
 
 app.initialize();
