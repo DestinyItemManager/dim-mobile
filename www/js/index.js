@@ -16,45 +16,49 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// const DIM_URL = 'https://app.destinyitemmanager.com';
-const DIM_URL = 'https://localhost:8080';
+const DIM_URL = 'https://app.destinyitemmanager.com';
+//const DIM_URL = 'https://localhost:8080';
 
-var app = {
-  // Application Constructor
-  initialize: function() {
-    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-  },
+function onDeviceReady() {
+  checkConnection();
+  navigator.splashscreen.hide();
+}
+document.addEventListener("deviceready", onDeviceReady, false);
 
-  // deviceready Event Handler
-  //
-  // Bind any cordova events here. Common events are:
-  // 'pause', 'resume', etc.
-  onDeviceReady: function() {
-    this.receivedEvent('deviceready');
-
-    if (navigator.connection.type == Connection.NONE) {
-      navigator.notification.alert('An internet connection is required to continue');
-    } else {
-      var browser = cordova.InAppBrowser.open(`${DIM_URL}?utm_source=mobile-app`,
-                                              '_self',
-                                              'location=no,zoom=no,hidden=yes,toolbar=no');
-      browser.show();
-    }
-  },
-
-  // Update DOM on a Received Event
-  receivedEvent: function(id) {
-    /*
-    var parentElement = document.getElementById(id);
-    var listeningElement = parentElement.querySelector('.listening');
-    var receivedElement = parentElement.querySelector('.received');
-
-    listeningElement.setAttribute('style', 'display:none;');
-    receivedElement.setAttribute('style', 'display:block;');
-
-    console.log('Received Event: ' + id);
-    */
+function checkConnection() {
+  if (navigator.connection.type == Connection.NONE){
+    document.getElementById("noconn").style.display = "block";
+    document.getElementById("loading").style.display = "none";
+  } else {
+    openInAppBrowser(DIM_URL);
   }
-};
+}
 
-app.initialize();
+function retryConnection() {
+  document.getElementById("noconn").style.display = "none";
+  document.getElementById("loading").style.display = "block";
+  // adding delay for UX
+  setTimeout(function(){
+    checkConnection();
+  }, 500);
+}
+
+function openInAppBrowser(url) {
+  var iab = window.open(url + '?utm_source=mobile-app', "_blank", "location=no,zoom=no,toolbar=no,hidden=yes,transitionstyle=crossdissolve");
+
+  iab.addEventListener('loadstop', function() {
+    iab.show();
+  });
+
+  iab.addEventListener('loadstart', function(obj) {
+    if (navigator.network.connection.type == Connection.NONE) {
+      navigator.notification.alert("Internet connection was not detected, check your connection and retry", null, "No Internet");
+    }
+  });
+
+  iab.addEventListener('loaderror', function() {
+    document.getElementById("noconn").style.display = "block";
+    document.getElementById("loading").style.display = "none";
+  });
+}
+
