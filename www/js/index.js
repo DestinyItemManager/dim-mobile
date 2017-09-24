@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+// const DIM_URL = 'https://app.destinyitemmanager.com';
+const DIM_URL = 'https://localhost:8080';
+
 var app = {
   // Application Constructor
   initialize: function() {
@@ -28,18 +31,15 @@ var app = {
   // 'pause', 'resume', etc.
   onDeviceReady: function() {
     this.receivedEvent('deviceready');
-    /*
+
     if (navigator.connection.type == Connection.NONE) {
       navigator.notification.alert('An internet connection is required to continue');
     } else {
-      window.location="https://app.destinyitemmanager.com/index.html?utm_source=mobile-app";
+      var browser = cordova.InAppBrowser.open(`${DIM_URL}?utm_source=mobile-app`,
+                                              '_self',
+                                              'location=no,zoom=no,hidden=yes,toolbar=no');
+      browser.show();
     }
-    */
-
-    var browser = cordova.InAppBrowser.open('https://app.destinyitemmanager.com?utm_source=mobile-app','_self','location=no,zoom=no,hidden=yes,toolbar=no');
-
-    browser.show();
-
   },
 
   // Update DOM on a Received Event

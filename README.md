@@ -14,4 +14,4 @@ See [Cordova iOS guide](https://cordova.apache.org/docs/en/latest/guide/platform
 # Running in Simulator
 
 * `npx cordova run ios --list`: list simulators/devices
-* `npx cordova run ios`: run in simulator
+* `npx cordova run ios --target="iPhone-7"`: run in simulator
