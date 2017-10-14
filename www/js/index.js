@@ -22,7 +22,9 @@
 const DIM_URL = 'https://app.destinyitemmanager.com';
 
 function onDeviceReady() {
-  //StatusBar.overlaysWebView(falseg);
+  window.StatusBar.overlaysWebView(false);
+  window.StatusBar.styleBlackOpaque();
+  window.StatusBar.backgroundColorByHexString('#222');
   if (window.indexedDB) {
     alert(window.navigator.userAgent);
   } else {
