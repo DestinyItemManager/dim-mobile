@@ -26,9 +26,9 @@ function onDeviceReady() {
   window.StatusBar.styleBlackOpaque();
   window.StatusBar.backgroundColorByHexString('#222');
   if (window.indexedDB) {
-    alert(window.navigator.userAgent);
+    console.log(window.navigator.userAgent);
   } else {
-    alert("I'm in UIWebView");
+    console.log("I'm in UIWebView");
   }
   checkConnection();
   navigator.splashscreen.hide();
@@ -40,7 +40,7 @@ function checkConnection() {
     document.getElementById("noconn").style.display = "block";
     document.getElementById("loading").style.display = "none";
   } else {
-    window.location.replace(DIM_URL + '?utm_medium=mobile-app&utm_source=' + cordova.platformId + '-mobile-app');
+    window.location = DIM_URL + '?utm_medium=mobile-app&utm_source=' + cordova.platformId + '-mobile-app';
   }
 }
 
