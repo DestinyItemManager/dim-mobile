@@ -22,6 +22,12 @@
 const DIM_URL = 'https://app.destinyitemmanager.com';
 
 function onDeviceReady() {
+  //StatusBar.overlaysWebView(falseg);
+  if (window.indexedDB) {
+    alert(window.navigator.userAgent);
+  } else {
+    alert("I'm in UIWebView");
+  }
   checkConnection();
   navigator.splashscreen.hide();
 }
