@@ -20,6 +20,7 @@
     <allow-navigation href="https://*.live.com" />
     <allow-navigation href="https://*.sonyentertainmentnetwork.com" />
     <allow-navigation href="https://*.battle.net" />
+    <allow-navigation href="*" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
