@@ -20,3 +20,8 @@ See [Cordova iOS guide](https://cordova.apache.org/docs/en/latest/guide/platform
 
 * `npx cordova run ios --list`: list simulators/devices
 * `npx cordova run ios --target="iPhone-7"`: run in simulator
+
+Or, open the project in XCode, then:
+
+* Run `npx cordova build ios`. You need to do this after each change - just building in XCode isn't enough.
+* Hit "Run" to run in simulator.
