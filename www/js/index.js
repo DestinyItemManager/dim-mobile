@@ -16,8 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+// See https://taco.visualstudio.com/en-us/docs/create-a-hosted-app/ for info on this style of "hosted app".
+
 const DIM_URL = 'https://app.destinyitemmanager.com';
-//const DIM_URL = 'https://localhost:8080';
 
 function onDeviceReady() {
   checkConnection();
@@ -26,11 +28,11 @@ function onDeviceReady() {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function checkConnection() {
-  if (navigator.connection.type == Connection.NONE){
+  if (navigator.connection.type == Connection.NONE) {
     document.getElementById("noconn").style.display = "block";
     document.getElementById("loading").style.display = "none";
   } else {
-    openInAppBrowser(DIM_URL);
+    window.location.replace(DIM_URL + '?utm_medium=mobile-app&utm_source=' + cordova.platformId + '-mobile-app');
   }
 }
 
